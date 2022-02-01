@@ -44,7 +44,7 @@ const App = () => {
             <Products products={products} onAddToCart={handleAddToCart} />
           }
         />
-        <Route path="/cart" element={<Cart cart={cart} />} />
+        <Route path="cart" element={<Cart cart={cart} />} />
       </Routes>
     </Router>
   );
