@@ -73,7 +73,7 @@ const App = () => {
             />
           }
         />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout" element={<Checkout cart={cart} />} />
       </Routes>
     </Router>
   );
