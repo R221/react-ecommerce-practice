@@ -9,10 +9,40 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import Review from "./Review";
 
-const PaymentForm = ({ checkoutToken }) => {
+const stripePromise = loadStripe(" ... ");
+
+const PaymentForm = ({ checkoutToken, backStep }) => {
   return (
     <>
       <Review checkoutToken={checkoutToken} />
+      <Divider />
+      <Typography variant="h6" gutterBottom style={{ margin: "20px 0" }}>
+        Payment method
+      </Typography>
+      <Elements strip={stripePromise}>
+        <ElementsConsumer>
+          {({ elements, stripe }) => (
+            <form>
+              <CardElement />
+              <br />
+              <br />
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button variant="outlined" onClick={backStep}>
+                  Back
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={!stripe}
+                  color="primary"
+                >
+                  Pay {checkoutToken.live.subtotal.formatted_with_symbol}
+                </Button>
+              </div>
+            </form>
+          )}
+        </ElementsConsumer>
+      </Elements>
     </>
   );
 };
