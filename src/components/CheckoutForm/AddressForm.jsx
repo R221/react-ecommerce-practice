@@ -6,6 +6,7 @@ import {
   Button,
   Grid,
   Typography,
+  TextField,
 } from "@material-ui/core";
 import { useForm, FormProvider } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -20,7 +21,7 @@ const AddressForm = ({ checkoutToken, test }) => {
   const [shippingSubdivision, setShippingSubdivision] = useState("");
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState("");
-  const methods = useForm();
+  const { handleSubmit, register, control } = useForm();
 
   const fetchShippingCountries = async (checkoutTokenId) => {
     const { countries } = await commerce.services.localeListShippingCountries(
@@ -76,24 +77,67 @@ const AddressForm = ({ checkoutToken, test }) => {
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
-      <FormProvider {...methods}>
+      <FormProvider>
         <form
-          onSubmit={methods.handleSubmit((data) =>
+          onSubmit={handleSubmit((data) => {
+            console.log(data);
             test({
               ...data,
               shippingCountry,
               shippingSubdivision,
               shippingOption,
-            })
-          )}
+            });
+          })}
         >
+          {/* <form
+          onSubmit={(data) => {
+            console.log(data);
+            test({
+              ...data,
+              shippingCountry,
+              shippingSubdivision,
+              shippingOption,
+            });
+          }} 
+        > */}
           <Grid container spacing={3}>
-            <FormInput required name="firstName" label="First name" />
-            <FormInput required name="lastName" label="Last name" />
-            <FormInput required name="address1" label="Address line 1" />
-            <FormInput required name="email" label="Email" />
-            <FormInput required name="city" label="City" />
-            <FormInput required name="zip" label="Zip / Postal code" />
+            <TextField
+              {...register("firstName")}
+              required
+              name="firstName"
+              label="First name"
+            />
+
+            <TextField
+              {...register("lastName")}
+              required
+              name="lastName"
+              label="Last name"
+            />
+            <TextField
+              {...register("address1")}
+              required
+              name="address1"
+              label="Address line 1"
+            />
+            <TextField
+              {...register("email")}
+              required
+              name="email"
+              label="Email"
+            />
+            <TextField
+              {...register("city")}
+              required
+              name="city"
+              label="City"
+            />
+            <TextField
+              {...register("zip")}
+              required
+              name="zip"
+              label="Zip / Postal code"
+            />
             <Grid item xs={12} sm={6}>
               <InputLabel>Shipping Country</InputLabel>
               <Select

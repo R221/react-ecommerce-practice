@@ -48,6 +48,7 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
   }, [cart, activeStep, navigate]);
 
   const test = (data) => {
+    console.log(data);
     setShippingData(data);
 
     nextStep();
@@ -59,7 +60,8 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
         <div>
           <Typography variant="h5">
             Thank you for your purchase, {order.customer.firstname}{" "}
-            {order.customer.lastname}!
+            {order.customer.lastname}! Please check your email for further
+            information.
           </Typography>
           <Divider className={classes.divider} />
           <Typography variant="subtitle2">
